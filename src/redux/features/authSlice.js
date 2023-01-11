@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import  API from "../api";
+import  axiosInstance from "../api";
 
 export const login = createAsyncThunk(
   "auth/login",
   async ({ formValue,navigate ,toast }, { rejectWithValue }) => {
     try {
-      const response = await API.post("/users/signin", formValue);
+      const response = await axiosInstance.post("/users/signin", formValue);
       toast.success("Login Successfully");
       // navigate("/dashboard");
       return response.data;
@@ -20,7 +20,7 @@ export const register = createAsyncThunk(
   "auth/register",
   async ({ formValue, navigate, toast }, { rejectWithValue }) => {
     try {
-      const response = await  API.post("/users/signup", formValue);
+      const response = await  axiosInstance.post("/users/signup", formValue);
       toast.success("Register Successfully");
       // navigate("/");
       return response.data;

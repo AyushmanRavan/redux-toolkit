@@ -7,16 +7,21 @@ import axios from "axios";
 //   baseURL: `${devEnv ? REACT_APP_DEV_API : REACT_APP_PROD_API}`,
 // });
 
-const API = axios.create({baseURL: process.env.REACT_APP_BASEURL});
+const axiosInstance = axios.create({
+  baseURL: process.env.REACT_APP_BASEURL,
+  headers: {
+    "Content-type": "application/json"
+  }
+});
 
-API.interceptors.request.use((req) => {
+axiosInstance.interceptors.request.use((req) => {
     if (localStorage.getItem("profile")) {
       req.headers.Authorization = `Bearer ${
         JSON.parse(localStorage.getItem("profile")).token
       }`;
     }
     return req;
-  });
+});
 
 
 // export const signIn = (formData) => API.post("/users/signin", formData);
@@ -28,4 +33,4 @@ API.interceptors.request.use((req) => {
 // export const updateTour = (updatedTourData, id) =>
 //   API.patch(`/tour/${id}`, updatedTourData);
 // export const deleteTour = (id) => API.delete(`/tour/${id}`);
-export default API
+export default axiosInstance
